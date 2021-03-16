@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        var noise = [];
+function RandomSeed(x, y) {
+    if (!noise[x])
+        noise[x] = [];
+    if (!noise[x][y])
+        noise[x][y] = (Math.random() - 0.5) * 2;
+    console.log(noise[x][y]);
+    return noise[x][y];  
+}
+
+function Seed(seed){
+    var n = x + y;
+    if(seed){
+    	return n*seed;
+    }else{
+    	n = x + y * 57;
+    	n = (n<<13) ^ n;
+    	return ( 1.0 - ( (n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0); 
+    }
+}
+
+function SmoothedNoise1(x, y) {
+    corners = ( Seed(x-1, y-1)+Seed(x+1, y-1)+Seed(x-1, y+1)+Seed(x+1, y+1) ) / 16
+    sides   = ( Seed(x-1, y)  +Seed(x+1, y)  +Seed(x, y-1)  +Seed(x, y+1) ) /  8
+    center  =  Seed(x, y) / 4
+    return corners + sides + center
+}
+
+function InterpolatedNoise(x, y) {
+
+    integer_X    = Math.floor(x)
+    fractional_X = x - integer_X
+
+    integer_Y    = Math.floor(y)
+    fractional_Y = y - integer_Y
+
+    v1 = SmoothedNoise1(integer_X,     integer_Y)
+    v2 = SmoothedNoise1(integer_X + 1, integer_Y)
+    v3 = SmoothedNoise1(integer_X,     integer_Y + 1)
+    v4 = SmoothedNoise1(integer_X + 1, integer_Y + 1)
+
+    i1 = Interpolate(v1 , v2 , fractional_X)
+    i2 = Interpolate(v3 , v4 , fractional_X)
+
+    return Interpolate(i1 , i2 , fractional_Y)
+
+}
+
+
+function PerlinNoise_2D(x, y) {
+    total = 0
+    p = 0.4
+    n = 2 - 1 //octaves
+
+    for(var i = 0; i < n; i++) {
+
+        frequency = 0.1;
+        amplitude = 7;
+
+        total = total + InterpolatedNoise(x * frequency, y * frequency) * amplitude
+
+    }
+
+    return total
+}
+
+function Interpolate(a, b, x) {
+    ft = x * 3.1415927
+    f = (1 - Math.cos(ft)) * .5
+
+    return  a*(1-f) + b*f
+}
+
+var context = document.getElementById("canvas").getContext("2d");
+var imageData = context.getImageData(0, 0, 512, 512);
+
+for(var y = 0; y < imageData.height; y++) {
+    for(var x = 0; x < imageData.width; x++) {
+        var color = PerlinNoise_2D(x, y) * 255; 
+        var index = ((y * imageData.width) + x) * 4;
+        imageData.data[index + 0] = color;
+        imageData.data[index + 1] = color;
+        imageData.data[index + 2] = color;
+        imageData.data[index + 3] = 255;
+    }
+}
+context.putImageData(imageData, 0, 0);
+    </script>
+</body>
+</html>

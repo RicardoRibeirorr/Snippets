@@ -1,0 +1,34 @@
+//*********************
+//  Bogo Sort / Monkey Sort
+//*********************
+// It works shuffling the list and check all elements to see 
+// if magically are sorted. 
+// The probability of sort something with this is 1/(n!).
+
+
+//Shuffle function
+function shuffle(list) {
+  // Shuffling the list
+  for(var j, x, i = list.length; i; j = Math.floor(Math.random() * i), x = list[--i], list[i] = list[j], list[j] = x);
+  return list;
+}
+
+//Check if is sorted
+function isSorted(list){
+  // Loop on array elements to check if are in order
+  for(var i = 1; i < list.length; i++) {
+      if (list[i-1] > list[i]) { return false; }
+  }
+  return true;
+}
+
+// Main Bogo call - Call the function above and check for results
+function bogo(list){
+  var sorted = false;
+  // Loop until is shuffled in a sorted way
+  while(sorted == false){
+      list = shuffle(list);
+      sorted = isSorted(list);
+  }
+  return list;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Cell (The Game Of Life)</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+    <script src="./code.js"></script>
+
+    <style>
+        .d-flex {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="d-flex">
+    <ul>
+        <li><button>Reset Instance</button></li>
+        <li><input type="checkbox" name="toggleWalls" onClick="toggleWalls()"> <label for="toggleWalls">Toggle
+                Walls</label></li>
+        <li><label for="">Grid Size (X.Y):</label> <input type="number" value="60" id="gridCols"
+                placeholder="Width"><input type="number" value="60" placeholder="Height" id="gridRows"> <button
+                onClick="submitGridChanges()">Submit</button></li>
+        <li><label for="">Square Size:</label> <input type="number" id="squareSize" value="6"
+                placeholder="Square Size"><button onClick="submitSquareChanges()">Submit</button></li>
+        <li><label for="">Cell Init Size:</label> <input type="number" id="cellGridSize" value="10"
+                placeholder="Cell Size"><button onClick="submitCellChanges()">Submit</button></li>
+    </ul>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+
+//********************************
+//      Bubble Sorting
+//********************************
+// Bubble sorting is one of most simplest algorithms,
+// it loops throug the list 2 times (one forward and the other backwards)
+// and compare pairs of numbers. If the 1º number 
+
+
+function bubble(list){
+  // Getting the array length
+    var length = list.length;
+    
+    // The main loop to iterate backwards over the whole list, from length-1 to 0
+    for (var i = length-1; i >= 0; i--){
+       // Child loop to make iterate all over and over and compare by pairs
+       for(var j = 1; j <= i; j++){
+           // If the current item is smaller than the next, they will change positions
+           if(list[j-1] > list[j]){
+               var aux = list[j-1];
+               list[j-1] = list[j];
+               list[j] = aux;
+            }
+       }
+    }
+    return list;
+}
+
+
+//********************************
+//      Example
+//********************************
+var list_example = [1,5,3,7,9,12,44,17,6,47];
+bubble(list_example);

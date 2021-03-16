@@ -1,0 +1,51 @@
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <div class="container">
+    <h1>Simple Linear Regression</h1>
+    <h5>Made by: <strong>Ricardo O'Ribeiro</strong></h5>
+    <hr>
+    <p>Live example: <a href="https://jsfiddle.net/RR_xiv/41vf2rbh/">Linear Regression</a></p>
+    <p>A code detailed live example. Due to its step-by-step implementation, it is not recomended for professional use, as it is not optimised. If you want to apply it to a real-world application, mix both functions (StandardDeviation and CorrelationCoefficient) to increase performance.</p>
+    <div id="graphDiv"></div>
+    <script>
+    
+    
+    //******************************************
+    // IGNORE THIS SCRIPT, IT ONLY SERVES TO PLOT THE VALUES
+    //******************************************
+    //******************************************
+    //******************************************
+      function plot(data, prediction, line) {
+        var layout = [
+        {
+            x: line.x,
+            y: line.y,
+            name:"Predict line",
+            type: 'scatter'
+          },
+           {
+            x: data.x,
+            y: data.y,
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Data',
+          },
+          {
+          	title: "asdasd",
+            x: prediction.x,
+            y: prediction.y,
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Prediction',
+  					marker: { size: 12 }
+          }
+
+        ];
+
+        Plotly.newPlot('graphDiv', layout);
+      }
+      //******************************************
+    // IGNORE THIS SCRIPT, IT ONLY SERVES TO PLOT THE VALUES
+    </script>
+    <script src="LinearRegression.js"></script>
+  </div>
