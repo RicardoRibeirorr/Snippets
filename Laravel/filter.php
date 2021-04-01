@@ -22,3 +22,25 @@ public function filter(Request $request, User $user)
     // Get the results and return them.
     return $user->get();
 }
+
+
+// ******************************** OR *************************** //
+
+   public function index(Request $request)
+    {
+        $users = User::where('is_active', true);
+
+        if ($request->has('age_more_than')) {
+            $users->where('age', '>', $request->age_more_than);
+        }
+
+        if ($request->has('gender')) {
+            $users->where('gender', $request->gender);
+        }
+
+        if ($request->has('created_at')) {
+            $users->where('created_at','>=', $request->created_at);
+        }
+
+        return $users->get();
+    }
