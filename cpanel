@@ -1,0 +1,1 @@
+Symbolic link(cronjob): ln -s /home/xxxxxx/public_html/storage/app/public/ /home/xxxxxx/public_html/public/storage
