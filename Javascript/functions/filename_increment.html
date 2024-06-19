@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Upload</title>
+  </head>
+  <body>
+    <input type="file" id="fileInput" multiple />
+    <table class="" id="table_of_files">
+      <tbody></tbody>
+    </table>
+
+    <!--***************************************************** -->
+    <!--***************************************************** -->
+    <!--***************************************************** -->
+    <!--****************     CODE BELOW   ******************* -->
+    <!--***************************************************** -->
+    <!--***************************************************** -->
+    <!--***************************************************** -->
+    <script>
+      document
+        .getElementById("fileInput")
+        .addEventListener("change", handleFileUpload);
+
+      let existingFileNames = ["file.txt", "example.txt"]; // Example list of existing files
+      publish_changes_in_html();
+
+
+      /***********************************************************/
+      /*          FUNCTION TO EXECUTED WHEN UPLOADING FILE       */
+      /***********************************************************/
+      function handleFileUpload(event) {
+        const files = event.target.files;
+        for (let i = 0; i < files.length; i++) {
+          let newFileName = files[i].name;
+          newFileName = getUniqueFileName(newFileName, existingFileNames);
+          console.log("Uploaded file:", newFileName);
+          existingFileNames.push(newFileName); // Add the new unique file name to the list of existing files
+        }
+
+
+        // THIS IS A HELP FUNCTION TO SHOW IN THE PAGE:
+        publish_changes_in_html();
+      }
+
+
+      /***********************************************************/
+      /*          RETURN A UNIQUE NAME FROM A LIST OF NAMES      */
+      /***********************************************************/
+      function getUniqueFileName(fileName, fileList) {
+        let newFileName = fileName;
+        let fileExists = fileList.includes(newFileName);
+        let counter = 1;
+
+        const name =
+          newFileName.substring(0, newFileName.lastIndexOf(".")) || newFileName;
+        const extension =
+          newFileName.substring(newFileName.lastIndexOf(".")) || "";
+
+        while (fileExists) {
+          newFileName = `${name}(${counter})${extension}`;
+          fileExists = fileList.includes(newFileName);
+          counter++;
+        }
+
+        return newFileName;
+      }
+
+
+
+      /***********************************************************/
+      /*          HELP FUNCTION TO PUBLISH CHANGES IN VIEW       */
+      /***********************************************************/
+      function publish_changes_in_html() {
+        const table_body = document
+          .getElementById("table_of_files")
+          .getElementsByTagName("tbody")[0];
+
+        table_body.innerHTML = "";
+        existingFileNames.forEach((name) => {
+          // Insert a row at the end of table
+          var newRow = table_body.insertRow();
+
+          // Insert a cell at the end of the row
+          var newCell = newRow.insertCell();
+
+          // Append a text node to the cell
+          var newText = document.createTextNode(name);
+          newCell.appendChild(newText);
+        });
+      }
+    </script>
+  </body>
+</html>
